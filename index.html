@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>DETR: End-to-End Object Detection With Transformers</title>
+
+    <meta name="description" content="DETR is a model that uses a transformer to perform efficient object detection">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <base href="/"> -->
+
+    <!--FACEBOOK-->
+    <meta property="og:image" content="https://people.eecs.berkeley.edu/~bmild/fourfeat/img/foxface.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="512">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://people.eecs.berkeley.edu/~bmild/fourfeat/"/>
+    <meta property="og:title" content="DETR: End-to-End Object Detection With Transformers" />
+    <meta property="og:description" content="DETR is a model that uses a transformer to perform efficient object detection" />
+
+    <!--TWITTER-->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DETR: End-to-End Object Detection With Transformers" />
+    <meta name="twitter:description" content="DETR is a model that uses a transformer to perform efficient object detection" />
+    <meta name="twitter:image" content="https://people.eecs.berkeley.edu/~bmild/fourfeat/img/foxface.jpg" />
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                DETR: End-to-End Object Detection With Transformers
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="https://scholar.google.com/citations?hl=en&user=h8u3ll8AAAAJ">
+                            Nicolas Carion*
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://scholar.google.com/citations?hl=en&user=uWGCQkwAAAAJ">
+                            Francisco Massa*
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://scholar.google.com/citations?user=wN9rBkcAAAAJ&hl=en">
+                            Gabriel Synnaeve
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://scholar.google.com/citations?user=tYro5N8AAAAJ&hl=en">
+                            Nicolas Usunier
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://alexander-kirillov.github.io/">
+                            Alexander Kirillov
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://scholar.google.com/citations?hl=en&user=EqJw1-4AAAAJ">
+                            Sergey Zagoruyko
+                        </a>
+                        </br>Facebook AI
+                    </li>
+                </ul>
+                *denotes equal contribution
+            </div>
+        </div>
+        <div class="row">
+            &nbsp
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <ul class="nav justify-content-center nav-fill">
+                    <li class="nav-item">
+                        <a href="https://arxiv.org/abs/2005.12872">
+                            <image src="assets/paper.png" height="60px">
+                                <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/facebookresearch/detr">
+                            <image src="assets/github.png" height="60px">
+                                <h4><strong>Code</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/facebookresearch/detr">
+                            <image src="assets/blog.png" height="60px">
+                                <h4><strong>Blog</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/facebookresearch/detr">
+                            <image src="assets/youtube.png" height="60px">
+                                <h4><strong>Talk</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            &nbsp
+        </div>
+
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2>
+                    Abstract
+                </h2>
+                <image src="assets/overview.jpg" class="img-fluid" alt="overview"><br>
+                    <p class="text-justify">
+
+                        We present a new method that views object detection as a direct set prediction problem. Our approach streamlines the detection pipeline, effectively removing the need for many hand-designed components like a non-maximum suppression procedure or anchor generation that explicitly encode our prior knowledge about the task. The main ingredients of the new framework, called DEtection TRansformer or DETR, are a set-based global loss that forces unique predictions via bipartite matching, and a transformer encoder-decoder architecture. Given a fixed small set of learned object queries, DETR reasons about the relations of the objects and the global image context to directly output the final set of predictions in parallel. The new model is conceptually simple and does not require a specialized library, unlike many other modern detectors. DETR demonstrates accuracy and run-time performance on par with the well-established and highly-optimized Faster RCNN baseline on the challenging COCO object detection dataset. Moreover, DETR can be easily generalized to produce panoptic segmentation in a unified manner. We show that it significantly outperforms competitive baselines. Training code and pretrained models are available at <a href="https://github.com/facebookresearch/detr">this URL</a>.
+                    </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2>
+                    ECCV Talk
+                </h2>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/utxbUlo9CyY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Visualizing attention
+                </h2>
+                <image src="assets/elephants.png" class="img-fluid" alt="overview"><br>
+
+                    <p class="text-justify">
+                        Since DETR is an attention-based model, we can visualize what the network is looking at to make predictions. In the image above, we overlay the attention heat-map in the same color as the box it corresponds to. We notice that DETR focuses on the extremities of the objects, to be able to accurately predict the extent of the bounding boxes.
+
+                    </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Main results
+                </h2>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Model</th>
+                            <th scope="col">Backbone</th>
+                            <th scope="col">AP</th>
+                            <th scope="col">AP small</th>
+                            <th scope="col">AP medium</th>
+                            <th scope="col">AP large</th>
+                            <th scope="col">FPS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Detr</td>
+                            <td>Resnet-50</td>
+                            <td>42.0</td>
+                            <td>20.5</td>
+                            <td>45.8</td>
+                            <td>61.1</td>
+                            <td>28</td>
+                        </tr>
+                        <tr>
+                            <td>Detr-DC5</td>
+                            <td>Resnet-50</td>
+                            <td>43.3</td>
+                            <td>22.5</td>
+                            <td>47.3</td>
+                            <td>61.1</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>Detr</td>
+                            <td>Resnet-101</td>
+                            <td>43.5</td>
+                            <td>21.9</td>
+                            <td>48.0</td>
+                            <td>61.8</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Detr-DC5</td>
+                            <td>Resnet-101</td>
+                            <td>44.9</td>
+                            <td>23.7</td>
+                            <td>49.5</td>
+                            <td>62.3</td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-justify">
+                    We report the Average Precision (AP) on the coco 2017 validation set. All models are trained for 500 epochs, and timings are obtained on a V100 with torchscript and a batch size of 1.
+                    Refer to the paper for additional details.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Extending to panoptic segmetation
+                </h2>
+                <image src="assets/panoptic.jpg" class="img-fluid" alt="overview"><br>
+
+                    <p class="text-justify">
+                        DETR can be naturally extended to panoptic segmentation, proving its generality. We obtain a performance of 45.6 PQ on the coco validation set.
+
+                    </p>
+            </div>
+        </div>
+    </div>
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <p>Built with <a href="https://getbootstrap.com/">Bootstrap</a> with inspiration from <a href="http://people.eecs.berkeley.edu/~bmild/fourfeat/">here</a>        </div>
+    </footer>
+</body>
+</html>
